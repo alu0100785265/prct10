@@ -6,9 +6,7 @@ class Bibliografia
         
         
         def initialize(autor, titulo,  fecha)
-            raise ArgumentError, 'Tiene que haber al menos un autor' if autor.length == 0
-            raise ArgumentError if ( (fecha.class != Date) ||
-                                    !(Date.valid_date?(fecha.year,fecha.month, fecha.mday)))
+           
             
             @autores = Array.new
             @titulo = titulo
