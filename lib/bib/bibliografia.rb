@@ -66,47 +66,19 @@ class Bibliografia
     end 
 #
 
-
-class Libros < Bibliografia
-    
-    attr_accessor  :serie, :editorial, :n_edicion, :isbn, :editorial
-    
-    def initialize(autor, titulo, serie, edicion, editorial, fecha, isbn)
-        super(autor, titulo, fecha)
-        raise ArgumentError if (isbn.class != Hash)
-            @isbn = isbn
-            @n_edicion = edicion
-            @serie = serie
-            @editorial = editorial
-        end #initialize
-        
-
-     def getISBN()
-            p @isbn
-        end #getISBN
-    
-    #Invalidamos el to_s de Bibliografia
-     def to_s()
-        (" #{@fecha} " + " #{@titulo.uppcase} " + "(#{@n_edicion})" + "(#{serie})" + " (#{@editorial})")
-    end #to_s
-
-end
-
-class Publicaciones < Bibliografia
-    
-    attr_accessor :url
-
-    def initialize(autor, titulo, fecha, url)
-        super(autor, titulo, fecha)
-           @url = url
-    end #initialize
-    
-    
-   def to_s()
-            
-            (" #{@fecha} " + " #{@titulo} " + " Web " + " #{@url} ")
-            end 
-end
+class Libro < Bbl
+    attr_accessor :editorial, :serie, :edicion, :numero_ISBN
+    def initialize(autores, titulo, editorial, serie, edicion, publicacion, isbn)
+      super(autores,titulo,publicacion)
+      @editorial = editorial
+      @serie = serie
+      @edicion = edicion
+      @numero_ISBN = Array.new(isbn)
+    end
+    def to_s
+      "#{@autores}, #{@numero_ISBN},#{@titulo},#{@editorial},#{@serie},#{@edicion},#{@fecha}"
+    end
+  end
 
 
 
@@ -128,3 +100,42 @@ class Revistas < Bibliografia
     (" #{@fecha} " + " #{@titulo.uppcase} " + "(#{@n_edicion})" + "(#{serie})" + " (#{@editorial})")
     end #to_s
 end
+
+class Articulo < Bbl
+  attr_accessor :numero_ISSN
+  
+  def initialize(autores, titulo, publicacion, issn)
+      super(autores,titulo,publicacion)
+      @numero_ISSN = Array.new(issn)
+  end
+  
+   def to_s
+    "#{@autores}, #{@titulo},#{@fecha},#{@numero_ISSN}"
+   end
+  end
+  
+  
+  class Doc_electronico < Bbl
+  attr_accessor :url
+  def initialize(autores, titulo, publicacion, url)
+      super(autores,titulo,publicacion)
+      @url = url
+  end
+  
+  def to_s
+    "#{@autores},#{@titulo},#{@fecha},#{@url}"
+  end
+  end 
+class Periodico < Bbl
+  attr_accessor :titular, :categoria
+  def initialize(autores, titular, fecha, publicacion, categoria)
+      super(autores,fecha,publicacion)
+      @titular =titular
+      @categoria = categoria
+  end
+    
+    def to_s
+    
+       "#{@autores},#{@titular},#{@fecha},#{@categoria}"
+       
+    end end
